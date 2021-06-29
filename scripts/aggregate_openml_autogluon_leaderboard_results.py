@@ -88,9 +88,9 @@ def aggregate_leaderboards_from_params(s3_bucket, s3_prefix, version_name, suffi
 
 if __name__ == '__main__':
     aggregate_leaderboards_from_params(
-        s3_bucket='automl-benchmark-ag',
-        s3_prefix='ec2/',
-        version_name='2021_05_22_infopt',
+        s3_bucket='automl-benchmark-jasonjsy',
+        s3_prefix='ec2/testing/',
+        version_name='autogluon.ag.1h8c.aws.20210629T001407',
         suffix='_1h8c',
         contains='.1h8c.',
     )

@@ -32,14 +32,15 @@ def aggregate_from_params(s3_bucket, s3_prefix, version_name, suffix, contains, 
 
 if __name__ == '__main__':
     aggregate_from_params(
-        s3_bucket='automl-benchmark-ag',
+        s3_bucket='automl-benchmark-jasonjsy',
         s3_prefix='',
-        version_name='ec2/2021_06_08_holdout',
+        version_name='ec2/testing/autogluon.ag.1h8c.aws.20210629T001407',
         suffix='_1h8c',
         contains='.1h8c.',
         results_prefix='',
-        save_path_str_replace_dict={'_ec2/': '_'},
+        save_path_str_replace_dict={'_ec2/testing/': '_'},
     )
+    """
     aggregate_from_params(
         s3_bucket='automl-benchmark-ag',
         s3_prefix='',
@@ -49,3 +50,4 @@ if __name__ == '__main__':
         results_prefix='',
         save_path_str_replace_dict={'_ec2/': '_'},
     )
+    """
