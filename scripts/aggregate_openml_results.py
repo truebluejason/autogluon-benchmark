@@ -4,11 +4,11 @@ from autogluon.core.utils import s3_utils
 from autogluon.core.utils.savers import save_pd
 
 
-def aggregate(path_prefix: str, contains=None):
+def aggregate(path_prefix: str, contains=None, suffix='scores/results.csv'):
     bucket, prefix = s3_utils.s3_path_to_bucket_prefix(path_prefix)
     # objects = list_bucket_prefix_suffix_s3(bucket=bucket, prefix=prefix, suffix='scores/results.csv')
     print(f'{bucket} | {prefix} | {contains}')
-    objects = list_bucket_prefix_suffix_contains_s3(bucket=bucket, prefix=prefix, suffix='scores/results.csv', contains=contains)
+    objects = list_bucket_prefix_suffix_contains_s3(bucket=bucket, prefix=prefix, suffix=suffix, contains=contains)
     print(objects)
     paths_full = [s3_utils.s3_bucket_prefix_to_path(bucket=bucket, prefix=file, version='s3') for file in objects]
     print(paths_full)
@@ -29,6 +29,13 @@ def aggregate_from_params(s3_bucket, s3_prefix, version_name, suffix, contains, 
             save_path = save_path.replace(substring, replacement)
     save_pd.save(path=save_path, df=df)
 
+    # also aggregate debug_info.csv contents
+    df = aggregate(path_prefix='s3://' + s3_bucket + '/' + results_prefix + result_path, contains=contains, suffix='debug_info.csv')
+    save_path = 's3://' + s3_bucket + '/' + aggregated_prefix + result_path + 'debug_info.csv'
+    if save_path_str_replace_dict is not None:
+        for substring, replacement in save_path_str_replace_dict.items():
+            save_path = save_path.replace(substring, replacement)
+    save_pd.save(path=save_path, df=df)
 
 if __name__ == '__main__':
     aggregate_from_params(
